@@ -35,7 +35,7 @@ public class ventaController {
             return ResponseEntity.ok(ventas);
         }    
     }
-
+    //EndPoint de listar una venta
     @GetMapping("/{idventa}")
     public ResponseEntity<?> BuscarVenta(@PathVariable Long idventa){
         try {
