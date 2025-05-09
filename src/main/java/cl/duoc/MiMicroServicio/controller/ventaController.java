@@ -26,6 +26,7 @@ public class ventaController {
     @Autowired
     private ventaService ventaservice;
 
+    //EndPoint de listar todas las ventas
     @GetMapping
     public ResponseEntity<?> ListarVentas(){
         List<venta> ventas = ventaservice.BuscarTodaVenta();
