@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.duoc.MiMicroServicio.DTO.UsuarioDTO;
+import cl.duoc.MiMicroServicio.DTO.VentaUsuarioDTO;
 import cl.duoc.MiMicroServicio.model.venta;
 import cl.duoc.MiMicroServicio.service.ventaService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,6 +46,24 @@ public class ventaController {
             return ResponseEntity.ok(ventabuscada);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentran Venta");
+        }
+    }
+
+    @GetMapping("/VentaUsuario/{idventa}")
+    public ResponseEntity<?> VentaUsuario(@PathVariable Long idventa){
+        try {
+            venta ventabuscada = ventaservice.BuscarUnaVenta(idventa);
+            UsuarioDTO usuario = ventaservice.BuscarUsuario(ventabuscada.getRutusuario());
+            VentaUsuarioDTO ventausuario = new VentaUsuarioDTO();
+            ventausuario.setFechaventa(ventabuscada.getFechaventa());
+            ventausuario.setIdventa(ventabuscada.getIdventa());
+            ventausuario.setMail(usuario.getMail());
+            ventausuario.setNombre(usuario.getNombre());
+            ventausuario.setRutusuario(ventabuscada.getRutusuario());
+
+            return ResponseEntity.ok(ventausuario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentran Venta o Usuario");
         }
     }
 
